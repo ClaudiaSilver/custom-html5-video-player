@@ -7,6 +7,8 @@ const progressBar = player.querySelector('.progress__filled');
 const toggle = player.querySelector('.toggle'); // this is the play button
 const skipButtons = player.querySelectorAll('[data-skip]');
 const ranges = player.querySelectorAll('.player__slider');
+const fullScreen = player.querySelector('.fullscreen');
+
 
 // Build functions
 
@@ -23,8 +25,8 @@ function togglePlay() {
 //     }
  
 function updateButton() {
-    const icon = this.paused? '▶️' : '⏸';
-    toggle.textContent = icon;
+    const icon = this.paused ? `<i class="material-icons">${'pause'}</i>` : `<i class="material-icons">${'play_arrow'}</i>`
+    toggle.innerHTML = icon;
 }
 
 function skip() {
@@ -52,6 +54,15 @@ function scrub(e){
     video.currentTime = scrubTime;
 }
 
+// toggles fullscreen
+function screenToggle() {
+    if(!document.fullscreenElement) {
+        video.requestFullscreen();
+    } else {
+         video.exitFullscreen();
+    } 
+}
+
 // Hook up event listeners 
 
 video.addEventListener('click', togglePlay);
@@ -70,5 +81,6 @@ progress.addEventListener('mousemove', (e) => mousedown && scrub(e)); // only mo
 progress.addEventListener('mousedown', () => mousedown = true);
 progress.addEventListener('mousedown', () => mousedown = false);
 
-// add full screen button and make it work!
+// add full screen button 
+fullScreen.addEventListener('click', screenToggle);
 
